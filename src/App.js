@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import React, {useEffect} from 'react';
+import Posts from './components/Posts'
+import { BrowserRouter as Router, Route, Switch  } from "react-router-dom";
+import Comment from './components/Comment';
+import {FetchingPostData} from './redux/postReducerF/Actions'
+import {useDispatch} from 'react-redux' ;
 function App() {
+  const dispatch = useDispatch()
+ 
+  useEffect(() => {
+     dispatch(FetchingPostData())
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Router basename="/posts">
+   
+
+   <Switch>
+   <Route path="/" exact component={Posts}/>
+   <Route path="/comment/:id" exact component={Comment}/>{" "}
+   </Switch>
+     
+     
+
+    
+    </Router>
+      
+      
     </div>
   );
 }
